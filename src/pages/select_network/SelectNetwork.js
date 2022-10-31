@@ -5,13 +5,13 @@ import LogoPolygon from "../../assets/images/polygon-40px.svg";
 import Bnb_main_logo from "../../assets/images/bwb_Logo.svg";
 import {useHistory} from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
-import {NETWORK_TYPE} from "../../utils/helper/helper";
+import {NETWORK_TYPE, WALLET_TYPE} from "../../utils/helper/helper";
 import {useSelector} from "react-redux";
 
 function SelectNetwork() {
     let history = useHistory();
 
-    const {selectNetwork} = useWallet();
+    const {selectNetwork,connectWallet} = useWallet();
 
     const {isConnectedWallet, networkId} = useSelector((store) => store.wallet);
 
@@ -22,7 +22,7 @@ function SelectNetwork() {
     }, [isConnectedWallet, networkId]);
 
     const handleNetworkSwitch = async (networkName) => {
-        await selectNetwork(networkName)
+        await selectNetwork(networkName);
     };
 
 

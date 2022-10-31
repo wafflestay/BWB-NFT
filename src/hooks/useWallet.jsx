@@ -64,6 +64,7 @@ const useWallet = () => {
                     {chainId: networks[networkName].chainId}
                 ],
             });
+            await getMetamaskAccount();
             const chainId = networks[networkName].networkId;
             console.log(chainId);
             dispatch(setNetworkId(chainId));
@@ -79,6 +80,7 @@ const useWallet = () => {
                         },
                     ],
                 });
+                await getMetamaskAccount();
                 const chainId = networks[networkName].networkId;
                 console.log(chainId);
                 dispatch(setNetworkId(chainId));

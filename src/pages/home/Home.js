@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import profileImg from "../../assets/images/profileImg.svg";
 import Bnb_main_logo from "../../assets/images/bwb_Logo.svg";
+import { useHistory } from "react-router-dom";
 import {useSelector} from "react-redux";
 import MintNft from "./mint_nft/MintNft";
 import MyNft from "./my_nft/MyNft";
@@ -9,8 +9,7 @@ import LogoEth from "../../assets/images/ethereum-40px.svg";
 import LogoKlay from "../../assets/images/klaytn-40px.svg";
 import LogoPolygon from "../../assets/images/polygon-40px.svg";
 import {getNetworkName} from "../../utils/web3/networks";
-import {GET} from "../../utils/api";
-import {Link} from "react-router-dom";
+
 function Home() {
     const [activeTab, setActiveTab] = useState(1);
     const {account, isConnectedWallet,networkId} = useSelector((store) => store.wallet);

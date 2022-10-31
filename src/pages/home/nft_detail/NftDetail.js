@@ -5,7 +5,8 @@ import Bnb_main_logo from "../../../assets/images/bwb_Logo.svg";
 import {useSelector} from "react-redux";
 import LogoEth from "../../../assets/images/ethereum-40px.svg";
 import axios from 'axios'
-import {useParams} from "react-router-dom";
+import useWallet from "../../../hooks/useWallet";
+import {useHistory, useParams} from "react-router-dom";
 import {getNetworkName} from "../../../utils/web3/networks";
 import LogoKlay from "../../../assets/images/klaytn-40px.svg";
 import LogoPolygon from "../../../assets/images/polygon-40px.svg";
@@ -14,10 +15,19 @@ import moment from "moment";
 import {GET} from "../../../utils/api";
 
 function NftDetail() {
+    let history = useHistory();
     const {contract_address, token_id} = useParams();
     const [nftDetail, setNftDetail] = useState([]);
     const [showLoading, setShowLoading] = useState(false);
     const {account, isConnectedWallet, networkId} = useSelector((store) => store.wallet);
+    function handleClick() {
+        history.push("/home");
+    }
+    const {logoutWallet} = useWallet();
+
+    async function logout() {
+        await logoutWallet();
+    }
 
     async function getNftDetail() {
         try {
@@ -67,6 +77,25 @@ function NftDetail() {
                         <div className="user_wallet_address">
                             {formatWalletAddress(account)}
                         </div>
+                        <button className="default_btn" onClick={() => {
+                            logout()
+                        }}>로그아웃
+                        </button>
+                    </div>
+
+                    <div className="tabs mt-150">
+                        <ul>
+                            <li onClick={handleClick}>
+                <span className= "" >
+                  NFT 발행
+                </span>
+                            </li>
+                            <li onClick={handleClick}>
+                <span className="">
+                  나의 NFT
+                </span>
+                            </li>
+                        </ul>
                     </div>
                     <div className="container mt-200">
                         <div className="row mint_nft_box">
@@ -112,13 +141,19 @@ function NftDetail() {
                                     </div>
                                 </div>
                                 <div className="detail_field">
+                                    <div className="detail_label">NFT 토큰 아이디</div>
+                                    <div>
+                                        <input disabled={true} type="text" value={nftDetail.token_id} className="detail_block"/>
+                                    </div>
+                                </div>
+                                <div className="detail_field">
                                     <div className="detail_label">NFT 발행 이름</div>
                                     <div>
                                         <input disabled={true} type="text" value={nftDetail.token_name} className="detail_block"/>
                                     </div>
                                 </div>
                                 <div className="detail_field">
-                                    <div className="detail_label">NFT 개수</div>
+                                    <div className="detail_label">NFT 갯수</div>
                                     <div>
                                         <input disabled={true} type="text" value={nftDetail.token_quantity} className="detail_block"/>
                                     </div>
